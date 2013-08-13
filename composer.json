@@ -1,0 +1,27 @@
+{
+    "name": "vespolina/action",
+    "description": "Vespolina action library to handle activities such as notifications",
+    "homepage": "http://vespolina-project.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vespolina Team",
+            "homepage": "https://github.com/vespolina/action/contributors"
+        }
+    ],
+    "keywords": ["Vespolina", "action", "ecommerce"],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "doctrine/mongodb-odm": "*",
+        "doctrine/orm" : "*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "Vespolina": "lib/",
+            "Vespolina\\Tests": "tests/"
+        }
+    }
+}
