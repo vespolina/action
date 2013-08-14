@@ -9,22 +9,57 @@
 
 namespace Vespolina\Action\Manager;
 
+use Vespolina\Entity\Action\ActionDefinitionInterface;
+use Vespolina\Action\Gateway\ActionDefinitionGatewayInterface;
+
 class ActionManager implements ActionManagerInterface
 {
     protected $eventDispatcher;
-    protected $gateway;
+    protected $definitionGateway;
+    protected $actionGenerators;
 
-    public function __construct($eventDispatcher)
+    public function __construct(ActionDefinitionGatewayInterface $definitionGateway, $eventDispatcher)
     {
-        if (!$eventDispatcher) {
-            $eventDispatcher = new NullDispatcher();
-        }
-
+        $this->actionGenerators = array();
+        $this->definitionGateway = $definitionGateway;
         $this->eventDispatcher = $eventDispatcher;
+        
     }
 
-    public function createAction($type)
+    public function createAction($actionDefinitionName)
     {
-
+        $actionDefinition = $this->definitionGateway->findByName($actionDefinitionName);
+        
+        if (null == $actionDefinition) {
+            //Todo throw error
+        }
+        
+        //$action = new $actionDefinition->getClassHandlerName();
+        
+        return $action;
+    }
+    
+    public function addActionDefinition(ActionDefinitionInterface $actionDefinition)
+    {
+        $this->definitionGateway->update($actionDefinition);
+    }
+    
+    public function addActionGenerator(ActionGeneratorInterface $actionGenerator)
+    {
+        $this->actionGenerators[] = $actionGenerator;
+    }
+    
+    public function handleEvent($eventName, $event)
+    {
+        foreach ($this->actionGenerators as $generator) 
+        {
+            $actions = $generator->handle($eventName, $event);
+        }
+    }
+    
+    public function linkEvent($event, array $actionDefinitions) 
+    {
+        
+        //TODO
     }
 }

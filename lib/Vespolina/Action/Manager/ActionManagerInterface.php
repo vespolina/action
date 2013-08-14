@@ -9,6 +9,8 @@
 
 namespace Vespolina\Action\Manager;
 
+use Vespolina\Entity\Action\ActionDefinitionInterface;
+
 /**
  * An interface to manage actions
  *
@@ -18,5 +20,11 @@ interface ActionManagerInterface
 {
     /** Create an action by it's name */
     function createAction($name);
+     
+    function addActionDefinition(ActionDefinitionInterface $actionDefinition);
+    
+    function handleEvent($eventName, $event);
+    
+    function linkEvent($event, array $actionDefinitions);
 }
 
