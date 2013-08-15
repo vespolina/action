@@ -7,7 +7,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 
 use Vespolina\Entity\Action\ActionDefinition;
 use Vespolina\Action\Generator\DefaultActionGenerator;
-use Vespolina\Action\Gateway\ActionDefinitionMemoryGateway;
+use Vespolina\Action\Gateway\ActionMemoryGateway;
 use Vespolina\Action\Manager\ActionManager;
 
 
@@ -38,6 +38,6 @@ class ActionGeneratorTest extends \PHPUnit_Framework_TestCase
     
     protected function getActionManager()
     {        
-        return new ActionManager(new ActionDefinitionMemoryGateway(), new EventDispatcher());
+        return new ActionManager(new ActionMemoryGateway(), new EventDispatcher());
     }
 }

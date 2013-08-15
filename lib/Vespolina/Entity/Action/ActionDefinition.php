@@ -12,7 +12,7 @@ namespace Vespolina\Entity\Action;
 class ActionDefinition implements ActionDefinitionInterface
 {
  
-    protected $actionHandlerClass;
+    protected $handlerClass;
     protected $name;
     protected $parameters;
     protected $schedulingType;
@@ -20,14 +20,14 @@ class ActionDefinition implements ActionDefinitionInterface
     
     public function __construct($name, $topic = 'default')
     {
-        $this->actionHandlerClass = 'Vespolina\Action\Handler\DefaultActionHandler';
+        $this->handlerClass = 'Vespolina\Action\Handler\DefaultActionHandler';
         $this->name = $name;
         $this->topic = $topic;
     }    
     
-    public function getActionHandlerClass()
+    public function getHandlerClass()
     {
-        return $this->actionHandlerClass;
+        return $this->handlerClass;
     }
     
     public function getName()
@@ -49,7 +49,12 @@ class ActionDefinition implements ActionDefinitionInterface
     {
         return $this->topic;
     }
-    
+
+    public function setHandlerClass($handlerClass)
+    {
+        $this->handlerClass = $handlerClass;
+    }
+
     public function isReprocessingAllowed()
     {
         return true;

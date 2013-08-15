@@ -10,15 +10,24 @@
 namespace Vespolina\Action\Gateway;
 
 use Vespolina\Entity\Action\ActionDefinitionInterface;
+use Vespolina\Entity\Action\ActionInterface;
 
 /**
  * An interface to manage actions
  *
  * @author Daniel Kucharski <daniel-xerias.be>
  */
-interface ActionDefinitionGatewayInterface
+interface ActionGatewayInterface
 {
-    
+
+    /**
+     * Find actions by state and optional the subject
+     * @param $state
+     * @param null $subject
+     * @return mixed
+     */
+    function findActionsByState($state, $subject = null);
+
     /**
      * Find action definitions matching the event name (or pattern)
      */
@@ -33,10 +42,15 @@ interface ActionDefinitionGatewayInterface
      * Find action definition by name
      */    
     function findByName($name);
-    
+
+    /**
+     * Create or update the action to the persistence layer
+     */
+    function updateAction(ActionInterface $action);
+
     /**
      * Create or update the action definition to the persistence layer
      */
-    function update(ActionDefinitionInterface $actionDefinition);
+    function updateActionDefinition(ActionDefinitionInterface $actionDefinition);
 }
 

@@ -18,13 +18,47 @@ use Vespolina\Entity\Action\ActionDefinitionInterface;
  */
 interface ActionManagerInterface
 {
-    /** Create an action by it's name */
-    function createAction($name);
-     
+    /**
+     * Create an action using the action definition name
+     * Optionally pass the subject (eg. order, cart, ...)
+     *
+     * @param $name
+     * @param $subject
+     *
+     * @return Vespolina\Entity\Action\ActionInterface
+     */
+    function createAction($actionDefinitionName, $subject = null);
+
+    /**
+     * Add a new action definition
+     *
+     * @param ActionDefinitionInterface $actionDefinition
+     * @return mixed
+     */
     function addActionDefinition(ActionDefinitionInterface $actionDefinition);
-    
+
+    /**
+     * Handle an inbound event, generate the relevant actions and execute them
+     *
+     * @param $eventName
+     * @param $event
+     * @return mixed
+     */
     function handleEvent($eventName, $event);
-    
+
+    /**
+     * @return mixed
+     */
+    function updateDispatcher();
+
+
+    /**
+     * Link an event to one or multiple action definitions
+     *
+     * @param $event
+     * @param array $actionDefinitions
+     * @return mixed
+     */
     function linkEvent($event, array $actionDefinitions);
 }
 

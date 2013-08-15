@@ -9,17 +9,34 @@
 
 namespace Vespolina\Action\Gateway;
 
-use Vespolina\Action\Gateway\ActionDefinitionGatewayInterface;
+use Vespolina\Action\Gateway\ActionGatewayInterface;
+use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 
-class ActionDefinitionMemoryGateway implements ActionDefinitionGatewayInterface
+class ActionMemoryGateway implements ActionGatewayInterface
 {
+    protected $actions;
     protected $definitions;
 
     public function __construct()
     {
+        $this->actions = array();
+        $this->definitinos = array();
     }
-    
+
+    public function findActionsByState($state, $subject = null)
+    {
+        $actions = array();
+
+        foreach ($this->actions as $action) {
+            if ($state == $action->getState()) {
+                $actions[] = $action;
+            }
+        }
+
+        return $actions;
+    }
+
     public function findByName($name)
     {
         if (!array_key_exists($name, $this->definitions))
@@ -46,8 +63,14 @@ class ActionDefinitionMemoryGateway implements ActionDefinitionGatewayInterface
         
         return $definitions;
     }
-    
-    public function update(ActionDefinitionInterface $actionDefinition)
+
+    public function updateAction(ActionInterface $action)
+    {
+        $key = $action->getSubjectId();
+        $this->actions[$key] = $action;
+    }
+
+    public function updateActionDefinition(ActionDefinitionInterface $actionDefinition)
     {
         $this->definitions[$actionDefinition->getName()] = $actionDefinition;
     }

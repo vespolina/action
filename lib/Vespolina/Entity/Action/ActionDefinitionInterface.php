@@ -19,7 +19,9 @@ interface ActionDefinitionInterface
     
     function getParameters();
     
-    function getActionHandlerClass();
+    function getHandlerClass();
+
+    function setHandlerClass($handlerClass);
     
     function getSchedulingType();
     

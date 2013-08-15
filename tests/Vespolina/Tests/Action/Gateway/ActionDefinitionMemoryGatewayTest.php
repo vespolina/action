@@ -3,7 +3,7 @@
 namespace Vespolina\Action\Tests\Gateway;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Vespolina\Action\Gateway\ActionDefinitionMemoryGateway;
+use Vespolina\Action\Gateway\ActionMemoryGateway;
 use Vespolina\Entity\Action\ActionDefinition;
 
 /**
@@ -16,7 +16,7 @@ class ActionManagerMemoryGatewayTest extends \PHPUnit_Framework_TestCase
         $gateway = $this->getGateway();
         
         $actionDefinition = new ActionDefinition('callForHelp');
-        $gateway->update($actionDefinition);
+        $gateway->updateActionDefinition($actionDefinition);
         
         $retrievedActionDefinition = $gateway->findByName('callForHelp');
         $this->assertNotNull($retrievedActionDefinition);
@@ -26,6 +26,6 @@ class ActionManagerMemoryGatewayTest extends \PHPUnit_Framework_TestCase
     
     protected function getGateway()
     {        
-        return new ActionDefinitionMemoryGateway();
+        return new ActionMemoryGateway();
     }
 }

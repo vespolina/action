@@ -26,4 +26,10 @@ interface ActionInterface
 
     function getContext();
 
+    function setState($state);
+
+    function setExecutedAt($executedAt);
+
+    function setScheduledAt($scheduledAt);
+
 }

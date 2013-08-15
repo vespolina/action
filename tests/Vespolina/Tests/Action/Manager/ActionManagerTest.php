@@ -4,7 +4,7 @@ namespace Vespolina\Action\Tests\Manager;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Vespolina\Action\Manager\ActionManager;
-use Vespolina\Action\Gateway\ActionDefinitionMemoryGateway;
+use Vespolina\Action\Gateway\ActionMemoryGateway;
 
 /**
  */
@@ -21,6 +21,6 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
     
     protected function getActionManager()
     {        
-        return new ActionManager(new ActionDefinitionMemoryGateway(), new EventDispatcher());
+        return new ActionManager(new ActionMemoryGateway(), new EventDispatcher());
     }
 }
