@@ -20,13 +20,35 @@ namespace Vespolina\Entity\Action;
  */
 interface ActionInterface
 {
+    /**
+     * Get the name of the action
+     * @return string
+     */
     function getName();
 
+    /**
+     * Get the subject of the action (eg. order)
+     * @return mixed
+     */
     function getSubject();
 
+    /**
+     * Get the execution context of this action
+     * @return mixed
+     */
     function getContext();
 
+    /**
+     * Get the state of this action
+     * @return string
+     */
     function setState($state);
+
+    /**
+     * Has the action ran before and was it succesfull?
+     * @return boolean
+     */
+    function isCompleted();
 
     function setExecutedAt($executedAt);
 

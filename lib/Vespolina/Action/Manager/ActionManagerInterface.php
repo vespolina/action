@@ -10,6 +10,7 @@
 namespace Vespolina\Action\Manager;
 
 use Vespolina\Entity\Action\ActionDefinitionInterface;
+use Vespolina\Entity\Action\ActionInterface;
 
 /**
  * An interface to manage actions
@@ -55,5 +56,21 @@ interface ActionManagerInterface
      * @return mixed
      */
     function linkEvent($event, array $actionDefinitions);
+
+    /**
+     * Process the given action
+     *
+     * @param ActionInterface $action
+     * @return mixed
+     */
+    function process(ActionInterface $action);
+
+    /**
+     * Process the given action again (on purpose!)
+     *
+     * @param ActionInterface $action
+     * @return mixed
+     */
+    function reprocess(ActionInterface $action);
 }
 

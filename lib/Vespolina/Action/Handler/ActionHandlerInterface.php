@@ -20,11 +20,29 @@ interface ActionHandlerInterface
 {
     /**
      * Create a new action out of an action definition
+     *
+     * @param ActionDefinitionInterface $definition
      */
     function createAction(ActionDefinitionInterface $definition);
-    
+
+    /**
+     * Process the action
+     *
+     * @param ActionInterface $action
+     * @param ActionDefinitionInterface $definition
+     * @return mixed
+     */
+    function process(ActionInterface $action, ActionDefinitionInterface $definition);
+
     /**
      * Verify if we are allowed to reprocess the given action
+     *
+     * @param ActionInterface $action
+     * @param ActionDefinitionInterface $definition
+     * @return boolean
      */
     function isReprocessable(ActionInterface $action, ActionDefinitionInterface $definition);
+
+
+
 }

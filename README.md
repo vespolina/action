@@ -44,13 +44,13 @@ Suppose that it wasn't possible to fuel the car because no gasoline could be fou
 We can detect failed actions and reprocess them (if allowed by the action definition)
 
 ```php
-$failedActions = $actionManager->findActionsByState($myCar, Actions::FAILED);
+$failedActions = $actionManager->findActionsByState(Actions::FAILED, $myCar);
 
 foreach ($failedActions as $action) {
     $actionManager->reprocess($action);
 }
 ```
-The action managers logs new attempt to reprocess and the outcome.
+The action managers logs new attempt to reprocess again.
 
 
         

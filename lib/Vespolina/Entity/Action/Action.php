@@ -50,6 +50,11 @@ class Action implements ActionInterface
         return $this->state;
     }
 
+    public function isCompleted()
+    {
+        return $this->state == Action::STATE_SUCCESS;
+    }
+
     public function setState($state)
     {
         $this->state = $state;

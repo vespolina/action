@@ -21,16 +21,30 @@ class DefaultActionHandler implements ActionHandlerInterface
     {
         $this->actionClass = $actionClass;
     }
-    
+
+    /**
+     * @inheritdoc
+     */
     public function createAction(ActionDefinitionInterface $actionDefinition)
     {
         return new $this->actionClass($actionDefinition->getName());
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isReprocessable(ActionInterface $action, ActionDefinitionInterface $definition)
     {
-        //Here you want to add additional logic based on the action definition and the current context of the action
+        //Here you could add additional logic based on the action definition and the current context of the action
         //But we only check the action definition here.
         return $definition->isReprocessable();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function process(ActionInterface $action, ActionDefinitionInterface $definition)
+    {
+
     }
 }

@@ -29,4 +29,13 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($action->getSubject(), $subject);   
     }
 
+    public function testIsCompleted()
+    {
+        $subject = 'order-car-124';
+        $context = array('color' => 'red');
+        $action = new Action('orderPaintForCar', $subject, $context);
+        $action->setState(Action::STATE_SUCCESS);
+
+        $this->assertTrue($action->isCompleted());
+    }
 }

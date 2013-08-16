@@ -9,6 +9,7 @@
 
 namespace Vespolina\Action\Manager;
 
+use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 use Vespolina\Action\Gateway\ActionGatewayInterface;
 use Vespolina\Action\Handler\DefaultActionHandler;
@@ -80,8 +81,18 @@ class ActionManager implements ActionManagerInterface
         
         //TODO
     }
-    
+
+    public function process(ActionInterface $action)
+    {
+        return $this->doProcess($action, false);
+    }
+
     public function reprocess(ActionInterface $action)
+    {
+        return $this->doProcess($action, true);
+    }
+
+    protected function doProcess(ActionInterface $action, $reprocess = false)
     {
         //The first question is, are we even allowed to reprocess this action?
         $definition = $this->findActionDefinitionByName($action->getName());
@@ -89,12 +100,20 @@ class ActionManager implements ActionManagerInterface
         if (null == $definition) {
             //TODO: Throw an error
         }
-        //Delegate to the action handler to see if the action is reprocessable
-        $isReprocessable = $this->handlers[$definition->getHandlerClass()]->isReprocessable($action, $definition);
-        
-        if (false == $isReprocessable) {
-            //TODO: Throw an error
+
+        $handler = $this->handlers[$definition->getHandlerClass()];
+
+        if ($reprocess) {
+            //Delegate to the action handler to see if the action is reprocessable
+            $isReprocessable = $handler->isReprocessable($action, $definition);
+
+            if (false == $isReprocessable) {
+                //TODO: Throw an error
+            }
+
         }
-        
+
+        //Cool, we can process the action!
+        return $handler->process($action, $definition);
     }
 }
