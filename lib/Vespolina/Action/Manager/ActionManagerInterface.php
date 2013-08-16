@@ -37,6 +37,7 @@ interface ActionManagerInterface
      */
     function addActionDefinition(ActionDefinitionInterface $actionDefinition);
 
+    function findActionDefinitionByname($name);
     /**
      * Handle an inbound event, generate the relevant actions and execute them
      *
@@ -45,12 +46,6 @@ interface ActionManagerInterface
      * @return mixed
      */
     function handleEvent($eventName, $event);
-
-    /**
-     * @return mixed
-     */
-    function updateDispatcher();
-
 
     /**
      * Link an event to one or multiple action definitions

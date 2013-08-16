@@ -41,7 +41,7 @@ interface ActionGatewayInterface
     /**
      * Find action definition by name
      */    
-    function findByName($name);
+    function findDefinitionByName($name);
 
     /**
      * Create or update the action to the persistence layer

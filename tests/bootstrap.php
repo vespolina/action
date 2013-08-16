@@ -11,6 +11,8 @@ EOT
     );
 }
 
+date_default_timezone_set('Europe/Brussels');
+
 $loader->add('Vespolina\\Tests', __DIR__ . '/../tests');
 
 /**

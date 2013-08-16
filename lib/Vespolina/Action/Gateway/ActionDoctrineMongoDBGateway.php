@@ -43,7 +43,7 @@ class ActionDoctrineMongoDBGateway implements ActionGatewayInterface
     }
 
     
-    public function findByName($name)
+    public function findDefinitionByName($name)
     {
         return $this->dm->createQueryBuilder($this->actionDefinitionClass)
             ->field('name')->equals($name)

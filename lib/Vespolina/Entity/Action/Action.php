@@ -23,12 +23,11 @@ class Action implements ActionInterface
     protected $scheduledAt;
     protected $state;
 
-    public function __construct($name, $subject, array $context = array())
+    public function __construct($name, $subject = '', array $context = array())
     {
         $this->name = $name;
         $this->subject = $subject;
         $this->context = $context;
-
     }
 
     public function getContext()

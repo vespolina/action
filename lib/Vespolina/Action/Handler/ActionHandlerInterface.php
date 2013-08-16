@@ -8,12 +8,23 @@
  */
 namespace Vespolina\Action\Handler;
 
+use Vespolina\Entity\Action\ActionInterface;
+use Vespolina\Entity\Action\ActionDefinitionInterface;
+
 /**
- * An interface that generates actions out of event dispatcherevents
+ * An interface to handle the lifetime of an action
  *
  * @author Daniel Kucharski <daniel@xerias.be>
  */
 interface ActionHandlerInterface
 {
-    function createAction();
+    /**
+     * Create a new action out of an action definition
+     */
+    function createAction(ActionDefinitionInterface $definition);
+    
+    /**
+     * Verify if we are allowed to reprocess the given action
+     */
+    function isReprocessable(ActionInterface $action, ActionDefinitionInterface $definition);
 }

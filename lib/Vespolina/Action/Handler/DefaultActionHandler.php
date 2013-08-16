@@ -7,25 +7,30 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\Action\Generator;
+namespace Vespolina\Action\Handler;
 
-use Vespolina\Action\Handler\ActionHandlerInterface;
+use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
+use Vespolina\Action\Handler\ActionHandlerInterface;
 
 class DefaultActionHandler implements ActionHandlerInterface
 {
     protected $actionClass;
-
-    public function __construct($actionClass = 'Vespolina\Event\Action\Action')
+    
+    public function __construct($actionClass)
     {
         $this->actionClass = $actionClass;
     }
     
     public function createAction(ActionDefinitionInterface $actionDefinition)
     {
-        $action = new $this->actionClass($actionDefinition->getName());
-        
-        return $action;
+        return new $this->actionClass($actionDefinition->getName());
     }
 
+    public function isReprocessable(ActionInterface $action, ActionDefinitionInterface $definition)
+    {
+        //Here you want to add additional logic based on the action definition and the current context of the action
+        //But we only check the action definition here.
+        return $definition->isReprocessable();
+    }
 }
