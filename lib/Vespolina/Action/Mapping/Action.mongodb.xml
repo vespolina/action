@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                        http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="Vespolina\Entity\Action\Action"  collection="v_action">
+        <field name="name" fieldName="name" type="string"  id="true"/>
+        <field name="subject" fieldName="subject" type="string" />
+        <field name="subjectId" fieldName="subjectId" type="string" />
+        <field name="state" fieldName="state" type="string" />
+        <field name="context" fieldName="context" type="hash" />
+        <field name="scheduledAt" fieldName="schedulingType" type="string" />
+    </document>
+</doctrine-mongo-mapping>
