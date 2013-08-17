@@ -15,7 +15,8 @@
     },
     "require-dev": {
         "doctrine/mongodb-odm": "*",
-        "doctrine/orm" : "*"
+        "doctrine/orm" : "*",
+        "symfony/event-dispatcher": ">=2.1"
     },
     "minimum-stability": "dev",
     "autoload": {
