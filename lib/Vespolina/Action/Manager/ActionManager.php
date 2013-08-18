@@ -14,7 +14,6 @@ use Vespolina\Entity\Action\ActionDefinitionInterface;
 use Vespolina\Action\Gateway\ActionGatewayInterface;
 use Vespolina\Action\Handler\DefaultActionHandler;
 
-
 class ActionManager implements ActionManagerInterface
 {
     protected $actionClass;
@@ -78,7 +77,6 @@ class ActionManager implements ActionManagerInterface
     
     public function linkEvent($event, array $actionDefinitions) 
     {
-        
         //TODO
     }
 

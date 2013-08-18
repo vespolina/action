@@ -9,7 +9,6 @@
 
 namespace Vespolina\Action\Gateway;
 
-use Vespolina\Action\Gateway\ActionGatewayInterface;
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 

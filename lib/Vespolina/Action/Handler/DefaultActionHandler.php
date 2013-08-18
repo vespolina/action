@@ -11,7 +11,6 @@ namespace Vespolina\Action\Handler;
 
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
-use Vespolina\Action\Handler\ActionHandlerInterface;
 
 class DefaultActionHandler implements ActionHandlerInterface
 {
