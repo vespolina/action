@@ -10,7 +10,6 @@
 namespace Vespolina\Action\Gateway;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Vespolina\Action\Gateway\ActionGatewayInterface;
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 
