@@ -22,7 +22,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $subject = 'order-car-123';
         $context = array('color' => 'red');
         $action = new Action('orderPaintForCar', $subject, $context);
-        $action->setState(Action::STATE_SUCCESS);
+        $action->setState(Action::STATE_COMPLETED);
         $action->setExecutedAt(new \DateTime("now"));
 
         $this->assertEquals($action->getName(), 'orderPaintForCar');
@@ -35,7 +35,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $subject = 'order-car-124';
         $context = array('color' => 'red');
         $action = new Action('orderPaintForCar', $subject, $context);
-        $action->setState(Action::STATE_SUCCESS);
+        $action->setState(Action::STATE_COMPLETED);
 
         $this->assertTrue($action->isCompleted());
     }

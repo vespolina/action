@@ -15,10 +15,20 @@ namespace Vespolina\Entity\Action;
  */
 interface ActionDefinitionInterface
 {
+    /**
+     * Get the name of the action
+     * @return string
+     */
     function getName();
     
     function getParameters();
-    
+
+    /**
+     * Return the class name which will execute the action
+     * @return string
+     */
+    function getExecutionClass();
+
     function getHandlerClass();
 
     function setHandlerClass($handlerClass);
