@@ -27,7 +27,7 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
     
     public function testAddFindActionDefinition()
     {
-        $actionDefinition = new ActionDefinition('dance');
+        $actionDefinition = new ActionDefinition('dance', 'DanceExecutionClass');
         $this->manager->addActionDefinition($actionDefinition);
         
         $foundActionDefinition = $this->manager->findActionDefinitionByName('dance');
