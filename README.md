@@ -1,6 +1,8 @@
 action
 ======
 
+## Introduction
+
 This library manages actions.  An action can hold anything, from a notification to a webservice call.
 Actions are typically raised from a system event on a subject (eg. sales order raises a "confirmed" event).
 
@@ -13,8 +15,7 @@ For instance when a company ID check is performed in Europe the result of the we
 Actions are attached to subjects such as ecommerce orders.  An action manager can retrieve for a given subject (eg order) a trace of actions which have been performed and allow actions to be reprocessed.
 If a customer did not receive an order confirmation mail the action linked to the confirmation can be triggered again.
 
-Examples
-=======
+## Examples
 
 In memory action manager:
 
@@ -79,3 +80,15 @@ You can also directly create an action and execute it
 ```php
 $actionManager->executeAction($action);
 ```
+
+## Action definition
+
+An action definition hold following information
+
+* name : Name of the action definition, should be unique
+* topic : Optionally you can define the topic of the action. Eg. "order", "customer"
+* execution class : Name of the execution class to actually *do* something
+* handler class : Name of the class which handles the overall behavior and lifetime of an action
+* scheduling type : Should the action be executed directly or scheduled in the future?
+* parameters : An array of parameters which are injected to a newly created action which the action needs during processing
+$ isReprocessingAllowed:  Are we allowing an action to be reprocessed anyhow?

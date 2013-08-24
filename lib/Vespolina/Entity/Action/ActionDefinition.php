@@ -26,36 +26,57 @@ class ActionDefinition implements ActionDefinitionInterface
         $this->topic = $topic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getExecutionClass()
     {
         return $this->executionClass;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getHandlerClass()
     {
         return $this->handlerClass;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return $this->name;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function getParameters()
     {
         return $this->parameters;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSchedulingType()
     {
         return $this->schedulingType;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function getTopic()
     {
         return $this->topic;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setHandlerClass($handlerClass)
     {
         $this->handlerClass = $handlerClass;
