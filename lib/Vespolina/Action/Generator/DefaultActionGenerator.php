@@ -24,5 +24,4 @@ class DefaultActionGenerator implements ActionGeneratorInterface
     {
         return null;
     }
-
 }
