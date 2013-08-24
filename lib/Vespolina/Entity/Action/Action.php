@@ -12,7 +12,8 @@ namespace Vespolina\Entity\Action;
 class Action implements ActionInterface
 {
     const STATE_INITIAL = 'initial';    //Not executed
-    const STATE_SUCCESS = 'success';    //Executing succesful
+    const STATE_COMPLETED = 'completed';    //Executing succesful
+    const STATE_PENDING = 'pending';    //Action has been scheduled for completion
     const STATE_FAILURE = 'failure';    //Houston has been contacted
 
     protected $context;
@@ -23,6 +24,11 @@ class Action implements ActionInterface
     protected $scheduledAt;
     protected $state;
 
+    /**
+     * @param $name Action name
+     * @param string $subject subject (eg. order)
+     * @param array $context
+     */
     public function __construct($name, $subject = '', array $context = array())
     {
         $this->name = $name;
@@ -52,7 +58,7 @@ class Action implements ActionInterface
 
     public function isCompleted()
     {
-        return $this->state == Action::STATE_SUCCESS;
+        return $this->state == Action::STATE_COMPLETED;
     }
 
     public function setState($state)

@@ -20,7 +20,7 @@ class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
     public function testCreateAction()
     {
         $handler = new DefaultActionHandler('Vespolina\Entity\Action\Action');
-        $actionDefinition = new ActionDefinition('test');
+        $actionDefinition = new ActionDefinition('test', 'ExecutionClass');
         $action = $handler->createAction($actionDefinition);
         $this->assertInstanceOf('Vespolina\Entity\Action\Action', $action);         
     }
