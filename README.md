@@ -22,8 +22,8 @@ In memory action manager:
  $actionManager = new ActionManager(new ActionDefinitionMemoryGateway(), new EventDispatcher());
 
 //Register two action definitions
-$actionDefinition1 = new ActionDefinition('car', 'cleanTheCar', 'CleanTheCar');
-$actionDefinition2 = new ActionDefinition('car', 'fuelTheCar');
+$actionDefinition1 = new ActionDefinition('cleanTheCar', 'CleanTheCar', 'car');
+$actionDefinition2 = new ActionDefinition('cleanTheCar', 'FuelTheCar', 'car');
 $actionManager->addActionDefinition($actionDefinition1);
 $actionManager->addActionDefinition($actionDefinition2);
 
@@ -54,7 +54,7 @@ public class FuelTheCar implements ExecutionInterface
 $actionManager->linkEvent('car_event.state.sold', array($actionDefinition1, $actionDefinition2));
 
 //Initiate processing of an event
-$actionManager->processEvent('cart_event.state.sold', new Event($myCar));
+$actionManager->processEvent('cart_event.state.sold', new GenericEvent($myCar));
 ```
 The outcome of the processing is:
 * Two Action instance are created, one with the name 'cleanTheCar' and one 'fuelTheCar'
@@ -74,7 +74,8 @@ foreach ($failedActions as $action) {
 ```
 The action managers logs new attempt to reprocess again.
 
-
 You can also directly create an action and execute it
 
+```php
 $actionManager->executeAction($action);
+```
