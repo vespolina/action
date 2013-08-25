@@ -82,6 +82,17 @@ class ActionDefinition implements ActionDefinitionInterface
         $this->handlerClass = $handlerClass;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function setParameters(array $parameters)
+    {
+        $this->parameters = $parameters;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function isReprocessingAllowed()
     {
         return true;
