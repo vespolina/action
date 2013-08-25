@@ -9,16 +9,19 @@
 
 namespace Vespolina\Action\Handler;
 
+use Vespolina\Entity\Action\ActionDefinition;
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 
 class DefaultActionHandler implements ActionHandlerInterface
 {
     protected $actionClass;
+    protected $executors;
     
-    public function __construct($actionClass)
+    public function __construct($actionClass, &$executors)
     {
         $this->actionClass = $actionClass;
+        $this->executors = $executors;
     }
 
     /**
@@ -44,6 +47,25 @@ class DefaultActionHandler implements ActionHandlerInterface
      */
     public function process(ActionInterface $action, ActionDefinitionInterface $definition)
     {
+       $executor = $this->getExecutor($definition);
 
+       return $executor->execute($action);
+    }
+
+    /**
+     * Retrieve an instance of the executor class if not yet already present in the cache
+     *
+     * @param ActionDefinitionInterface $definition
+     * @return mixed
+     */
+    protected function getExecutor(ActionDefinitionInterface $definition)
+    {
+        $class = $definition->getExecutionClass();
+
+        if (!array_key_exists($class, $this->executors)) {
+            $this->executors[$class] = new $class();
+        }
+
+        return $this->executors[$class];
     }
 }

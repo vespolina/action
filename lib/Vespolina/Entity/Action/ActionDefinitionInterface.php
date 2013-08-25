@@ -47,14 +47,21 @@ interface ActionDefinitionInterface
      * Set the class name which will handle the lifetime and behavior of an action
      *
      * @param $handlerClass
-     * @return mixed
      */
     function setHandlerClass($handlerClass);
 
     /**
+     * Set parameters of this action definition
+     * When an action is created the parameters are copied into the context
+     *
+     * @param array $parameters
+     */
+    function setParameters(array $parameters);
+
+    /**
      * Should the action directly be execute or scheduled for later
      *
-     * @return mixed
+     * @return string
      */
     function getSchedulingType();
     
