@@ -11,6 +11,7 @@ namespace Vespolina\Action\Manager;
 
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
+use Vespolina\Action\Execution\ExecutionInterface;
 use Vespolina\Action\Gateway\ActionGatewayInterface;
 use Vespolina\Action\Generator\ActionGeneratorInterface;
 use Vespolina\Action\Handler\DefaultActionHandler;
@@ -20,7 +21,7 @@ class ActionManager implements ActionManagerInterface
 {
     protected $actionClass;
     protected $actionDefinitionClass;
-    
+    protected $executors;
     protected $handlers;
     protected $eventDispatcher;
     protected $definitionGateway;
@@ -33,12 +34,13 @@ class ActionManager implements ActionManagerInterface
         $this->actionClass = $actionClass;
         $this->actionDefinitionClass = $actionDefinitionClass;
         $this->eventDispatcher = $eventDispatcher;
+        $this->executors = array();
         $this->definitionGateway = $definitionGateway;
         $this->generators = array();
         $this->handlers = array();
         
         //Register a default handler
-        $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass);
+        $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->executors);
     }
 
     /**
@@ -76,6 +78,11 @@ class ActionManager implements ActionManagerInterface
     public function addActionDefinition(ActionDefinitionInterface $actionDefinition)
     {
         $this->definitionGateway->updateActionDefinition($actionDefinition);
+    }
+
+    public function addActionExecution(ExecutionInterface $actionExecution)
+    {
+        $this->executors[get_class($actionExecution)] = $actionExecution;
     }
 
     /**

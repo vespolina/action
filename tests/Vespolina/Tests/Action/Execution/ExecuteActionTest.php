@@ -55,7 +55,8 @@ class ExecuteActionTest extends \PHPUnit_Framework_TestCase
 
     protected function createAction()
     {
-        $handler = new DefaultActionHandler('Vespolina\Entity\Action\Action');
+        $executors = array();
+        $handler = new DefaultActionHandler('Vespolina\Entity\Action\Action', $executors);
         $actionDefinition = new ActionDefinition('test', 'ExecutionClass');
 
         return $handler->createAction($actionDefinition);

@@ -9,7 +9,9 @@
 
 namespace Vespolina\Action\Manager;
 
+use Vespolina\Action\Execution\ExecutionInterface;
 use Vespolina\Action\Generator\ActionGeneratorInterface;
+use Vespolina\CommerceBundle\Action\ActionExecution;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 use Vespolina\Entity\Action\ActionInterface;
 
@@ -48,6 +50,13 @@ interface ActionManagerInterface
      */
     function addActionDefinition(ActionDefinitionInterface $actionDefinition);
 
+    /**
+     * Register an action execution class
+     *
+     * @param ExecutionInterface $actionExecution
+     * @return mixed
+     */
+    function addActionExecution(ExecutionInterface $actionExecution);
     /**
      * Add an action generator
      *
