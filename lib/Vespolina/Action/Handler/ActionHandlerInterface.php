@@ -24,7 +24,7 @@ interface ActionHandlerInterface
      *
      * @param ActionDefinitionInterface $definition
      */
-    function createAction(ActionDefinitionInterface $definition);
+    function createAction(ActionDefinitionInterface $definition, $subject = null);
 
     /**
      * Process the action

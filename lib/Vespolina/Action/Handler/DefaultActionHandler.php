@@ -27,9 +27,16 @@ class DefaultActionHandler implements ActionHandlerInterface
     /**
      * @inheritdoc
      */
-    public function createAction(ActionDefinitionInterface $actionDefinition)
+    public function createAction(ActionDefinitionInterface $actionDefinition, $subject = null)
     {
-        return new $this->actionClass($actionDefinition->getName());
+        //Initialize the context with the parameters from the action definition
+        $context = array();
+        $parameters = $actionDefinition->getParameters();
+        if (null != $parameters) {
+            $context = array_merge($context, $parameters);
+        }
+
+        return new $this->actionClass($actionDefinition->getName(), $subject, $context);
     }
 
     /**

@@ -55,7 +55,7 @@ class ActionManager implements ActionManagerInterface
             //Todo throw error
         }
         
-        return $this->handlers[$actionDefinition->getHandlerClass()]->createAction($actionDefinition);
+        return $this->handlers[$actionDefinition->getHandlerClass()]->createAction($actionDefinition, $subject);
     }
 
     /**
