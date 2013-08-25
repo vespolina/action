@@ -12,7 +12,9 @@ namespace Vespolina\Action\Manager;
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 use Vespolina\Action\Gateway\ActionGatewayInterface;
+use Vespolina\Action\Generator\ActionGeneratorInterface;
 use Vespolina\Action\Handler\DefaultActionHandler;
+
 
 class ActionManager implements ActionManagerInterface
 {
@@ -30,16 +32,18 @@ class ActionManager implements ActionManagerInterface
     {
         $this->actionClass = $actionClass;
         $this->actionDefinitionClass = $actionDefinitionClass;
-        
         $this->eventDispatcher = $eventDispatcher;
         $this->definitionGateway = $definitionGateway;
         $this->generators = array();
         $this->handlers = array();
         
-        //Register the default handler
+        //Register a default handler
         $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function createAction($actionDefinitionName, $subject = null)
     {
         $actionDefinition = $this->definitionGateway->findDefinitionByName($actionDefinitionName);
@@ -51,22 +55,48 @@ class ActionManager implements ActionManagerInterface
         
         return $this->handlers[$actionDefinition->getHandlerClass()]->createAction($actionDefinition);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createAndExecuteAction($actionDefinitionName, $subject = null)
+    {
+        $action = $this->createAction($actionDefinitionName, $subject);
+
+        if (null != $action) {
+            $this->execute($action);
+        }
+
+        return $action;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function addActionDefinition(ActionDefinitionInterface $actionDefinition)
     {
         $this->definitionGateway->updateActionDefinition($actionDefinition);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function addActionGenerator(ActionGeneratorInterface $actionGenerator)
     {
         $this->generators[] = $actionGenerator;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function findActionDefinitionByName($name)
     {
         return $this->definitionGateway->findDefinitionByName($name);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function handleEvent($eventName, $event)
     {
         foreach ($this->actionGenerators as $generator) 
@@ -74,23 +104,40 @@ class ActionManager implements ActionManagerInterface
             $actions = $generator->handle($eventName, $event);
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public function linkEvent($event, array $actionDefinitions) 
     {
+        
         //TODO
     }
 
-    public function process(ActionInterface $action)
+    /**
+     * {@inheritDoc}
+     */
+    public function execute(ActionInterface $action)
     {
-        return $this->doProcess($action, false);
+        return $this->doExecute($action, false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function reprocess(ActionInterface $action)
     {
-        return $this->doProcess($action, true);
+        return $this->doExecute($action, true);
     }
 
-    protected function doProcess(ActionInterface $action, $reprocess = false)
+    /**
+     * Start the execution of an action or schedule the action for processing later on
+     *
+     * @param ActionInterface $action
+     * @param bool $reprocess
+     * @return mixed
+     */
+    protected function doExecute(ActionInterface $action, $reprocess = false)
     {
         //The first question is, are we even allowed to reprocess this action?
         $definition = $this->findActionDefinitionByName($action->getName());
@@ -108,7 +155,6 @@ class ActionManager implements ActionManagerInterface
             if (false == $isReprocessable) {
                 //TODO: Throw an error
             }
-
         }
 
         //Cool, we can process the action!

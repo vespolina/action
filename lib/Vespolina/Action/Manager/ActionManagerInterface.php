@@ -9,6 +9,7 @@
 
 namespace Vespolina\Action\Manager;
 
+use Vespolina\Action\Generator\ActionGeneratorInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 use Vespolina\Entity\Action\ActionInterface;
 
@@ -31,14 +32,36 @@ interface ActionManagerInterface
     function createAction($actionDefinitionName, $subject = null);
 
     /**
+     * Create an action using the action definition name
+     * and directly execute (or schedule it)
+     *
+     * @param $actionDefinitionName
+     * @param null $subject
+     * @return Vespolina\Entity\Action\ActionInterface
+     */
+    function createAndExecuteAction($actionDefinitionName, $subject = null);
+
+    /**
      * Add a new action definition
      *
      * @param ActionDefinitionInterface $actionDefinition
-     * @return mixed
      */
     function addActionDefinition(ActionDefinitionInterface $actionDefinition);
 
-    function findActionDefinitionByname($name);
+    /**
+     * Add an action generator
+     *
+     * @param ActionGeneratorInterface $generator
+     */
+    function addActionGenerator(ActionGeneratorInterface $generator);
+
+    /**
+     * Retrieve an action definition by it's name
+     * @param $name
+     * @return Vespolina\Entity\Action\ActionDefinitionInterface
+     */
+    function findActionDefinitionByName($name);
+
     /**
      * Handle an inbound event, generate the relevant actions and execute them
      *
@@ -49,7 +72,7 @@ interface ActionManagerInterface
     function handleEvent($eventName, $event);
 
     /**
-     * Link an event to one or multiple action definitions
+     * Link an event name to one or multiple action definitions
      *
      * @param $event
      * @param array $actionDefinitions
@@ -58,19 +81,12 @@ interface ActionManagerInterface
     function linkEvent($event, array $actionDefinitions);
 
     /**
-     * Process the given action
+     * Execute the given action
      *
      * @param ActionInterface $action
      * @return mixed
      */
-    function process(ActionInterface $action);
+    function execute(ActionInterface $action);
 
-    /**
-     * Process the given action again (on purpose!)
-     *
-     * @param ActionInterface $action
-     * @return mixed
-     */
-    function reprocess(ActionInterface $action);
 }
 
