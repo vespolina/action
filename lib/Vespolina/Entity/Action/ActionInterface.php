@@ -6,8 +6,8 @@
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
-namespace Vespolina\Entity\Action;
 
+namespace Vespolina\Entity\Action;
 
 /**
  * An interface defining an action.
@@ -20,6 +20,12 @@ namespace Vespolina\Entity\Action;
  */
 interface ActionInterface
 {
+    /**
+     * Get the action definition for this action
+     * @return Vespolina\Entity\Action\ActionDefinitionInterface
+     */
+    function getDefinition();
+
     /**
      * Get the name of the action
      * @return string

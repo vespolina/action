@@ -9,6 +9,7 @@
 
 namespace Vespolina\Action\Generator;
 
+
 use Vespolina\Action\Manager\ActionManagerInterface;
 
 class DefaultActionGenerator implements ActionGeneratorInterface
@@ -22,6 +23,11 @@ class DefaultActionGenerator implements ActionGeneratorInterface
     
     public function generate($eventName, $event)
     {
-        return null;
+        $actions = array();
+        foreach ($this->actionManager->findActionDefinitionsForEvent($eventName) as $definition) {
+            $actions[] = $this->actionManager->createAction($definition, $event->getSubject());
+        }
+
+        return $actions;
     }
 }

@@ -15,32 +15,36 @@ use Vespolina\Action\Execution\ExecutionInterface;
 use Vespolina\Action\Gateway\ActionGatewayInterface;
 use Vespolina\Action\Generator\ActionGeneratorInterface;
 use Vespolina\Action\Handler\DefaultActionHandler;
-
+use Vespolina\Action\Generator\DefaultActionGenerator;
 
 class ActionManager implements ActionManagerInterface
 {
     protected $actionClass;
     protected $actionDefinitionClass;
+    protected $eventMap;
     protected $executors;
     protected $handlers;
     protected $eventDispatcher;
-    protected $definitionGateway;
+    protected $actionGateway;
     protected $generators;
 
-    public function __construct(ActionGatewayInterface $definitionGateway, $eventDispatcher, 
+    public function __construct(ActionGatewayInterface $actionGateway, $eventDispatcher, 
                                 $actionClass = 'Vespolina\Entity\Action\Action',
                                 $actionDefinitionClass = 'Vespolina\Entity\Action\ActionDefinition')
     {
         $this->actionClass = $actionClass;
         $this->actionDefinitionClass = $actionDefinitionClass;
         $this->eventDispatcher = $eventDispatcher;
+        $this->eventMap = array();
         $this->executors = array();
-        $this->definitionGateway = $definitionGateway;
+        $this->actionGateway = $actionGateway;
         $this->generators = array();
         $this->handlers = array();
         
         //Register a default handler
         $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->executors);
+        //Register a default generator
+        $this->generators['Vespolina\Action\Generator\DefaultActionGenerator'] = new DefaultActionGenerator($this);
     }
 
     /**
@@ -48,7 +52,7 @@ class ActionManager implements ActionManagerInterface
      */
     public function createAction($actionDefinitionName, $subject = null)
     {
-        $actionDefinition = $this->definitionGateway->findDefinitionByName($actionDefinitionName);
+        $actionDefinition = $this->actionGateway->findDefinitionByName($actionDefinitionName);
         $action = null;
 
         if (null == $actionDefinition) {
@@ -77,9 +81,12 @@ class ActionManager implements ActionManagerInterface
      */
     public function addActionDefinition(ActionDefinitionInterface $actionDefinition)
     {
-        $this->definitionGateway->updateActionDefinition($actionDefinition);
+        $this->actionGateway->updateActionDefinition($actionDefinition);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function addActionExecution(ExecutionInterface $actionExecution)
     {
         $this->executors[get_class($actionExecution)] = $actionExecution;
@@ -90,7 +97,7 @@ class ActionManager implements ActionManagerInterface
      */
     public function addActionGenerator(ActionGeneratorInterface $actionGenerator)
     {
-        $this->generators[] = $actionGenerator;
+        $this->generators[get_class($actionGenerator)] = $actionGenerator;
     }
 
     /**
@@ -98,7 +105,18 @@ class ActionManager implements ActionManagerInterface
      */
     public function findActionDefinitionByName($name)
     {
-        return $this->definitionGateway->findDefinitionByName($name);
+        return $this->actionGateway->findDefinitionByName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findActionDefinitionsForEvent($eventName)
+    {
+        if (array_key_exists($eventName, $this->eventMap)) {
+
+            return $this->eventMap[$eventName];
+        }
     }
 
     /**
@@ -106,19 +124,31 @@ class ActionManager implements ActionManagerInterface
      */
     public function handleEvent($eventName, $event)
     {
-        foreach ($this->actionGenerators as $generator) 
-        {
-            $actions = $generator->handle($eventName, $event);
+        $actions = array();
+
+        //Generate actions for this event name
+        foreach ($this->actionGenerators as $generator) {
+            $generatedActions = $generator->handle($eventName, $event);
+
+            if (null != $generatedActions) {
+                $actions = array_merge($actions, $generatedActions);
+            }
         }
+
+        //For each generated action, start execution
+        foreach ($actions as $action) {
+            $this->execute($action);
+        }
+
+        return $actions;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function linkEvent($event, array $actionDefinitions) 
+    public function linkEvent($event, array $actionDefinitionNames)
     {
-        
-        //TODO
+        $this->eventMap[$event] = $actionDefinitionNames;
     }
 
     /**
@@ -165,6 +195,9 @@ class ActionManager implements ActionManagerInterface
         }
 
         //Cool, we can process the action!
-        return $handler->process($action, $definition);
+        $outcome = $handler->process($action, $definition);
+        
+        //Save the state of the action
+        $this->actionGateway->updateAction($action);
     }
 }
