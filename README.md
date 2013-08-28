@@ -59,11 +59,13 @@ $actionManager->processEvent('cart_event.state.sold', new GenericEvent($myCar));
 ```
 The outcome of the processing is:
 * Two Action instance are created, one with the name 'cleanTheCar' and one 'fuelTheCar'
-* The two actions are directly executed.  The outcome of the executing is registered
+* The two actions are directly executed.  The outcome of the executing is tracked
 * Two action instances are persisted to the persistence gateway (in memory in this example)
 * While persisting the outcome of the actions are saved as well.
 
-Suppose that it wasn't possible to fuel the car because no gasoline could be found at the time our action would fail.
+Suppose that it wasn't possible to fuel the car because no gasoline could be found.  The action would definitely fail.
+Typically somebody would be notifified and the action would be performed again later.
+
 We can detect failed actions and reprocess them (if allowed by the action definition)
 
 ```php
@@ -78,12 +80,12 @@ The action managers logs new attempt to reprocess again.
 You can also directly create an action and execute it
 
 ```php
-$actionManager->executeAction($action);
+$actionManager->execute($action);
 ```
 
 ## Action definition
 
-An action definition hold following information
+An action definition holds following information
 
 * name : Name of the action definition, should be unique
 * topic : Optionally you can define the topic of the action. Eg. "order", "customer"
@@ -92,3 +94,17 @@ An action definition hold following information
 * scheduling type : Should the action be executed directly or scheduled in the future?
 * parameters : An array of parameters which are injected to a newly created action which the action needs during processing
 $ isReprocessingAllowed:  Are we allowing an action to be reprocessed anyhow?
+
+
+## Gateway support
+
+Currently we support following action gateways
+
+* Memory gateway
+* Doctrine MongoDB gateway
+
+
+## Todo
+
+* Use event dispatcher to dispatch action lifecycle events
+* Write an ORM gateway
