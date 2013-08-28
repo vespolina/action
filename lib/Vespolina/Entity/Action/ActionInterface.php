@@ -21,6 +21,12 @@ namespace Vespolina\Entity\Action;
 interface ActionInterface
 {
     /**
+     * Get the action definition for this action
+     * @return Vespolina\Entity\Action\ActionDefinitionInterface
+     */
+    function getDefinition();
+
+    /**
      * Get the name of the action
      * @return string
      */

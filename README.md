@@ -24,7 +24,7 @@ In memory action manager:
 
 //Register two action definitions
 $actionDefinition1 = new ActionDefinition('cleanTheCar', 'CleanTheCar', 'car');
-$actionDefinition2 = new ActionDefinition('cleanTheCar', 'FuelTheCar', 'car');
+$actionDefinition2 = new ActionDefinition('fuelTheCar', 'FuelTheCar', 'car');
 $actionManager->addActionDefinition($actionDefinition1);
 $actionManager->addActionDefinition($actionDefinition2);
 
@@ -52,7 +52,7 @@ public class FuelTheCar implements ExecutionInterface
 }
 
 //Link an event to one or multiple action definitions
-$actionManager->linkEvent('car_event.state.sold', array($actionDefinition1, $actionDefinition2));
+$actionManager->linkEvent('car_event.state.sold', array('cleanTheCar', 'fuelTheCar'));
 
 //Initiate processing of an event
 $actionManager->processEvent('cart_event.state.sold', new GenericEvent($myCar));
@@ -60,7 +60,7 @@ $actionManager->processEvent('cart_event.state.sold', new GenericEvent($myCar));
 The outcome of the processing is:
 * Two Action instance are created, one with the name 'cleanTheCar' and one 'fuelTheCar'
 * The two actions are directly executed.  The outcome of the executing is registered
-* Te two action instances are persisted to the persistence gateway (in memory in this example)
+* Two action instances are persisted to the persistence gateway (in memory in this example)
 * While persisting the outcome of the actions are saved as well.
 
 Suppose that it wasn't possible to fuel the car because no gasoline could be found at the time our action would fail.

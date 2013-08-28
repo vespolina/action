@@ -12,11 +12,12 @@ namespace Vespolina\Entity\Action;
 class Action implements ActionInterface
 {
     const STATE_INITIAL = 'initial';    //Not executed
-    const STATE_COMPLETED = 'completed';    //Executing succesful
+    const STATE_COMPLETED = 'completed';    //Executing was a success
     const STATE_PENDING = 'pending';    //Action has been scheduled for completion
     const STATE_FAILURE = 'failure';    //Houston has been contacted
 
     protected $context;
+    protected $definition;
     protected $name;
     protected $subject;
     protected $subjectId;
@@ -29,11 +30,17 @@ class Action implements ActionInterface
      * @param string $subject subject (eg. order)
      * @param array $context
      */
-    public function __construct($name, $subject = '', array $context = array())
+    public function __construct(ActionDefinitionInterface $definition, $name, $subject = '', array $context = array())
     {
+        $this->definition = $definition;
         $this->name = $name;
         $this->subject = $subject;
         $this->context = $context;
+    }
+
+    public function getDefinition()
+    {
+        return $this->definition;
     }
 
     public function getContext()
