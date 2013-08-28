@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Vespolina\Entity\Action\Tests\Manager;
+namespace Vespolina\Tests\Entity\Action\Manager;
 
 use Vespolina\Action\Manager\ActionManager;
 use Vespolina\Entity\Action\Action;

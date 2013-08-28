@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
  
-namespace Vespolina\Action\Tests\Manager;
+namespace Vespolina\Tests\Action\Manager;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Vespolina\Action\Execution\ExecutionInterface;
@@ -29,7 +29,7 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testAddFindActionDefinition()
     {
-        $actionDefinition = new ActionDefinition('dance', 'Vespolina\Action\Tests\Manager\DanceExecutionClass');
+        $actionDefinition = new ActionDefinition('dance', 'Vespolina\Tests\Action\Manager\DanceExecutionClass');
         $this->manager->addActionDefinition($actionDefinition);
         
         $foundActionDefinition = $this->manager->findActionDefinitionByName('dance');
@@ -39,7 +39,7 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateAction()
     {
-        $actionDefinition = new ActionDefinition('shake', 'Vespolina\Action\Tests\Manager\DanceExecutionClass');
+        $actionDefinition = new ActionDefinition('shake', 'Vespolina\Tests\Action\Manager\DanceExecutionClass');
         $this->manager->addActionDefinition($actionDefinition);
         $action = $this->manager->createAction('shake', 'dog007');
 
@@ -48,7 +48,7 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateAndExecuteAction()
     {
-        $actionDefinition = new ActionDefinition('shake',  'Vespolina\Action\Tests\Manager\DanceExecutionClass');
+        $actionDefinition = new ActionDefinition('shake',  'Vespolina\Tests\Action\Manager\DanceExecutionClass');
         $this->manager->addActionDefinition($actionDefinition);
         $action = $this->manager->createAndExecuteAction('shake', 'dog007');
 

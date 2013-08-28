@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
  
-namespace Vespolina\Action\Tests\Generator;
+namespace Vespolina\Tests\Action\Generator;
 
 use Vespolina\Action\Handler\DefaultActionHandler;
 use Vespolina\Entity\Action\ActionDefinition;
