@@ -55,7 +55,7 @@ public class FuelTheCar implements ExecutionInterface
 $actionManager->linkEvent('car_event.state.sold', array('cleanTheCar', 'fuelTheCar'));
 
 //Initiate processing of an event
-$actionManager->processEvent('cart_event.state.sold', new GenericEvent($myCar));
+$actionManager->handleEvent('cart_event.state.sold', new GenericEvent($myCar));
 ```
 The outcome of the processing is:
 * Two Action instance are created, one with the name 'cleanTheCar' and one 'fuelTheCar'
@@ -72,7 +72,7 @@ We can detect failed actions and reprocess them (if allowed by the action defini
 $failedActions = $actionManager->findActionsByState(Actions::FAILED, $myCar);
 
 foreach ($failedActions as $action) {
-    $actionManager->reprocess($action);
+    $actionManager->execute($action);
 }
 ```
 The action managers logs new attempt to reprocess again.
