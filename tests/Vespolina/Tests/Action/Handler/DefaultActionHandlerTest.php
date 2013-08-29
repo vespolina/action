@@ -12,11 +12,8 @@ namespace Vespolina\Action\Tests\Generator;
 use Vespolina\Action\Handler\DefaultActionHandler;
 use Vespolina\Entity\Action\ActionDefinition;
 
-/**
- */
 class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testCreateAction()
     {
         $executors = array();

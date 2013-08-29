@@ -12,11 +12,8 @@ namespace Vespolina\Entity\Action\Tests\Manager;
 use Vespolina\Action\Manager\ActionManager;
 use Vespolina\Entity\Action\Action;
 
-/**
- */
 class ActionTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testConstructor()
     {
         $subject = 'order-car-123';

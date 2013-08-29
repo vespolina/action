@@ -6,3 +6,5 @@ php:
   - 5.5
 
 services: mongodb
+
+script: php vendor/bin/phpspec run --format=dot
