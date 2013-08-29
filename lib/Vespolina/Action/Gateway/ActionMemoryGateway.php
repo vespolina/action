@@ -55,7 +55,7 @@ class ActionMemoryGateway implements ActionGatewayInterface
     public function findDefinitionByName($name)
     {
         if (!array_key_exists($name, $this->definitions)) {
-            return;
+            return null;
         }
             
         return $this->definitions[$name];
