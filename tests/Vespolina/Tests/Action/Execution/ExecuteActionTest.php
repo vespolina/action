@@ -19,7 +19,6 @@ use Vespolina\Entity\Action\Action;
  */
 class ExecuteActionTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testExecutionActionWithSucces()
     {
         $action = $this->createAction();

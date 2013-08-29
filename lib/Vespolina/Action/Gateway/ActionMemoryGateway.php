@@ -20,7 +20,7 @@ class ActionMemoryGateway implements ActionGatewayInterface
     public function __construct()
     {
         $this->actions = array();
-        $this->definitinos = array();
+        $this->definitions = array();
     }
 
     public function findActionsByState($state, $subject = null)
@@ -54,8 +54,9 @@ class ActionMemoryGateway implements ActionGatewayInterface
 
     public function findDefinitionByName($name)
     {
-        if (!array_key_exists($name, $this->definitions))
+        if (!array_key_exists($name, $this->definitions)) {
             return;
+        }
             
         return $this->definitions[$name];
     }

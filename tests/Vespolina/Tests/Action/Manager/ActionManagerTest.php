@@ -17,7 +17,6 @@ use Vespolina\Entity\Action\Action;
 use Vespolina\Entity\Action\ActionDefinition;
 use Vespolina\Entity\Action\ActionInterface;
 
-
 /**
  */
 class ActionManagerTest extends \PHPUnit_Framework_TestCase
@@ -68,5 +67,4 @@ class DanceExecutionClass implements  ExecutionInterface
         //Do something cool like dancing
         $action->setState(Action::STATE_COMPLETED);
     }
-
 }

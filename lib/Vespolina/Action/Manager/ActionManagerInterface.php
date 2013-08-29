@@ -11,7 +11,6 @@ namespace Vespolina\Action\Manager;
 
 use Vespolina\Action\Execution\ExecutionInterface;
 use Vespolina\Action\Generator\ActionGeneratorInterface;
-use Vespolina\CommerceBundle\Action\ActionExecution;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
 use Vespolina\Entity\Action\ActionInterface;
 
@@ -26,7 +25,7 @@ interface ActionManagerInterface
      * Create an action using the action definition name
      * Optionally pass the subject (eg. order, cart, ...)
      *
-     * @param $name
+     * @param $actionDefinitionName
      * @param $subject
      *
      * @return Vespolina\Entity\Action\ActionInterface
@@ -96,6 +95,5 @@ interface ActionManagerInterface
      * @return mixed
      */
     function execute(ActionInterface $action);
-
 }
 
