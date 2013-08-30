@@ -7,7 +7,7 @@
  * with this source code in the file LICENSE.
  */
  
-namespace Vespolina\Action\Tests\Execution;
+namespace Vespolina\Tests\Action\Execution;
 
 use Vespolina\Action\Execution\ExecutionInterface;
 use Vespolina\Action\Handler\DefaultActionHandler;

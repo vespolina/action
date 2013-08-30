@@ -72,6 +72,13 @@ interface ActionManagerInterface
     function findActionDefinitionByName($name);
 
     /**
+     * Retrieves a collection of action definitions linked to a particular event
+     * @param $eventName string
+     * @return array
+     */
+    function findActionDefinitionsForEvent($eventName);
+
+    /**
      * Handle an inbound event, generate the relevant actions and execute them
      *
      * @param $eventName
@@ -81,13 +88,13 @@ interface ActionManagerInterface
     function handleEvent($eventName, $event);
 
     /**
-     * Link an event name to one or multiple action definitions
+     * Link an event name to one or multiple action definition names
      *
      * @param $event
      * @param array $actionDefinitions
      * @return mixed
      */
-    function linkEvent($event, array $actionDefinitions);
+    function linkEvent($event, array $actionDefinitionNames);
 
     /**
      * Execute the given action
@@ -96,6 +103,5 @@ interface ActionManagerInterface
      * @return mixed
      */
     function execute(ActionInterface $action);
-
 }
 
