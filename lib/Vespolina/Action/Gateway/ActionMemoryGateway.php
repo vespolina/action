@@ -81,7 +81,7 @@ class ActionMemoryGateway implements ActionGatewayInterface
 
     public function updateAction(ActionInterface $action)
     {
-        $subjectKey = $action->getSubject();
+        $subjectKey = spl_object_hash($action->getSubject());
         
         if (!array_key_exists($subjectKey, $this->actions)) {
             $this->actions[$subjectKey] = array();
