@@ -19,9 +19,8 @@ class ActionDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
-        $actionDefinition = new ActionDefinition('orderPaintForCar', 'ExecutionClass', 'car');
+        $actionDefinition = new ActionDefinition('orderPaintForCar', 'car');
        
-        $this->assertEquals($actionDefinition->getExecutionClass(), 'ExecutionClass');
         $this->assertEquals($actionDefinition->getName(), 'orderPaintForCar');
         $this->assertEquals($actionDefinition->getTopic(), 'car');
         

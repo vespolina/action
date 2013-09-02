@@ -42,7 +42,7 @@ class ActionManager implements ActionManagerInterface
         $this->handlers = array();
         
         //Register a default handler
-        $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->executors);
+        $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->eventDispatcher);
         //Register a default generator
         $this->generators['Vespolina\Action\Generator\DefaultActionGenerator'] = new DefaultActionGenerator($this);
     }
@@ -65,7 +65,7 @@ class ActionManager implements ActionManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function createAndExecuteAction($actionDefinitionName, $subject = null)
+    public function launchAction($actionDefinitionName, $subject = null)
     {
         $action = $this->createAction($actionDefinitionName, $subject);
 

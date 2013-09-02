@@ -46,27 +46,25 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Vespolina\Entity\Action\Action', $action);
     }
 
-    public function testCreateAndExecuteAction()
+    public function testLaunchAction()
     {
         $actionDefinition = new ActionDefinition('shake',  'Vespolina\Tests\Action\Manager\DanceExecutionClass');
         $this->manager->addActionDefinition($actionDefinition);
-        $action = $this->manager->createAndExecuteAction('shake', 'dog007');
+        $action = $this->manager->launchAction('shake', new DummySubject());
+    }
+}
 
+class DanceExecutionListener
+{
+    function execute(ActionEvent $event)
+    {
+        //Do something cool like dancing
+        $event->getAction()->setState(Action::STATE_COMPLETED);
     }
 
 }
 
-class DanceExecutionClass implements  ExecutionInterface
+class DummySubject
 {
-    /**
-     * Execute an action
-     *
-     * @param ActionInterface $action
-     */
-    function execute(ActionInterface $action)
-    {
-        //Do something cool like dancing
-        $action->setState(Action::STATE_COMPLETED);
-    }
 
 }
