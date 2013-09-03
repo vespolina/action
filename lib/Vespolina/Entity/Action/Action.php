@@ -36,6 +36,7 @@ class Action implements ActionInterface
         $this->name = $name;
         $this->subject = $subject;
         $this->context = $context;
+        $this->state = self::STATE_INITIAL;
     }
 
     public function getDefinition()

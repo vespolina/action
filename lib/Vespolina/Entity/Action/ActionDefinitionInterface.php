@@ -30,11 +30,19 @@ interface ActionDefinitionInterface
     function getParameters();
 
     /**
-     * Return the class name which will execute the action
+     * Return the event name used when the action is processed
      *
      * @return string
      */
-    function getExecutionClass();
+    function getEventName();
+
+    /**
+     * Set the event name to be called when an action is executed
+     *
+     * @param $name
+     * @return mixed
+     */
+    function setEventName($name);
 
     /**
      * Return the class name which will handle the lifetime and behavior of an action

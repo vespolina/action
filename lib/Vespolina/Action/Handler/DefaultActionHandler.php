@@ -9,6 +9,7 @@
 
 namespace Vespolina\Action\Handler;
 
+use Vespolina\Action\Event\ActionEvent;
 use Vespolina\Entity\Action\ActionDefinition;
 use Vespolina\Entity\Action\ActionInterface;
 use Vespolina\Entity\Action\ActionDefinitionInterface;
@@ -16,12 +17,12 @@ use Vespolina\Entity\Action\ActionDefinitionInterface;
 class DefaultActionHandler implements ActionHandlerInterface
 {
     protected $actionClass;
-    protected $executors;
+    protected $eventDispatcher;
     
-    public function __construct($actionClass, &$executors)
+    public function __construct($actionClass, $eventDispatcher)
     {
         $this->actionClass = $actionClass;
-        $this->executors = $executors;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -45,7 +46,7 @@ class DefaultActionHandler implements ActionHandlerInterface
     public function isReprocessable(ActionInterface $action, ActionDefinitionInterface $definition)
     {
         //Here you could add additional logic based on the action definition and the current context of the action
-        //But we only check the action definition here.
+        //But we only check the action definition here if it is ever allowed.
         return $definition->isReprocessable();
     }
 
@@ -54,25 +55,17 @@ class DefaultActionHandler implements ActionHandlerInterface
      */
     public function process(ActionInterface $action, ActionDefinitionInterface $definition)
     {
-       $executor = $this->getExecutor($definition);
+       $event = new ActionEvent($action);
+       $eventName = $definition->getEventName();
 
-       return $executor->execute($action);
-    }
+       if (null == $eventName) {
+           $eventName = 'v.action.' . $action->getName() . '.execute';
+       }
+        //var_dump($this->eventDispatcher);die($eventName);
 
-    /**
-     * Retrieve an instance of the executor class if not yet already present in the cache
-     *
-     * @param ActionDefinitionInterface $definition
-     * @return mixed
-     */
-    protected function getExecutor(ActionDefinitionInterface $definition)
-    {
-        $class = $definition->getExecutionClass();
-
-        if (!array_key_exists($class, $this->executors)) {
-            $this->executors[$class] = new $class();
+        if (!$this->eventDispatcher->hasListeners($eventName)) {
+            throw new \RuntimeException('No listener configured for action execution ' . $eventName);
         }
-
-        return $this->executors[$class];
+        $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

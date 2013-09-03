@@ -6,7 +6,7 @@
 
     <document name="Vespolina\Entity\Action\ActionDefinition"  collection="v_action_definition">
         <field name="name" fieldName="name" type="string"  id="true"/>
-        <field name="executionClass" fieldName="executionClass" type="string" />
+        <field name="eventName" fieldName="eventName" type="string" />
         <field name="handlerClass" fieldName="handlerClass" type="string" />
         <field name="topic" fieldName="topic" type="string" />
         <field name="parameters" fieldName="parameters" type="hash" />
