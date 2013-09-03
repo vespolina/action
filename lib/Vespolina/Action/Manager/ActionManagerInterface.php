@@ -23,7 +23,7 @@ use Vespolina\Entity\Action\ActionInterface;
 interface ActionManagerInterface
 {
     /**
-     * Create an action using the action definition name
+     * Create an action entity for the action definition name
      * Optionally pass the subject (eg. order, cart, ...)
      *
      * @param $name
@@ -34,14 +34,13 @@ interface ActionManagerInterface
     function createAction($actionDefinitionName, $subject = null);
 
     /**
-     * Create an action using the action definition name
-     * and directly execute (or schedule it)
+     * Launch an action using the action definition name
      *
      * @param $actionDefinitionName
      * @param null $subject
      * @return Vespolina\Entity\Action\ActionInterface
      */
-    function createAndExecuteAction($actionDefinitionName, $subject = null);
+    function launchAction($actionDefinitionName, $subject = null);
 
     /**
      * Add a new action definition
@@ -49,20 +48,6 @@ interface ActionManagerInterface
      * @param ActionDefinitionInterface $actionDefinition
      */
     function addActionDefinition(ActionDefinitionInterface $actionDefinition);
-
-    /**
-     * Register an action execution class
-     *
-     * @param ExecutionInterface $actionExecution
-     * @return mixed
-     */
-    function addActionExecution(ExecutionInterface $actionExecution);
-    /**
-     * Add an action generator
-     *
-     * @param ActionGeneratorInterface $generator
-     */
-    function addActionGenerator(ActionGeneratorInterface $generator);
 
     /**
      * Retrieve an action definition by it's name
@@ -77,24 +62,6 @@ interface ActionManagerInterface
      * @return array
      */
     function findActionDefinitionsForEvent($eventName);
-
-    /**
-     * Handle an inbound event, generate the relevant actions and execute them
-     *
-     * @param $eventName
-     * @param $event
-     * @return mixed
-     */
-    function handleEvent($eventName, $event);
-
-    /**
-     * Link an event name to one or multiple action definition names
-     *
-     * @param $event
-     * @param array $actionDefinitions
-     * @return mixed
-     */
-    function linkEvent($event, array $actionDefinitionNames);
 
     /**
      * Execute the given action

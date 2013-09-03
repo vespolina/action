@@ -22,7 +22,6 @@ class ActionManager implements ActionManagerInterface
     protected $actionClass;
     protected $actionDefinitionClass;
     protected $eventMap;
-    protected $executors;
     protected $handlers;
     protected $eventDispatcher;
     protected $actionGateway;
@@ -36,15 +35,11 @@ class ActionManager implements ActionManagerInterface
         $this->actionDefinitionClass = $actionDefinitionClass;
         $this->eventDispatcher = $eventDispatcher;
         $this->eventMap = array();
-        $this->executors = array();
         $this->actionGateway = $actionGateway;
-        $this->generators = array();
         $this->handlers = array();
         
         //Register a default handler
-        $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->executors);
-        //Register a default generator
-        $this->generators['Vespolina\Action\Generator\DefaultActionGenerator'] = new DefaultActionGenerator($this);
+        $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->eventDispatcher);
     }
 
     /**
@@ -65,7 +60,7 @@ class ActionManager implements ActionManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function createAndExecuteAction($actionDefinitionName, $subject = null)
+    public function launchAction($actionDefinitionName, $subject = null)
     {
         $action = $this->createAction($actionDefinitionName, $subject);
 
@@ -87,22 +82,6 @@ class ActionManager implements ActionManagerInterface
     /**
      * {@inheritDoc}
      */
-    public function addActionExecution(ExecutionInterface $actionExecution)
-    {
-        $this->executors[get_class($actionExecution)] = $actionExecution;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addActionGenerator(ActionGeneratorInterface $actionGenerator)
-    {
-        $this->generators[get_class($actionGenerator)] = $actionGenerator;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function findActionDefinitionByName($name)
     {
         return $this->actionGateway->findDefinitionByName($name);
@@ -117,38 +96,6 @@ class ActionManager implements ActionManagerInterface
 
             return $this->eventMap[$eventName];
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function handleEvent($eventName, $event)
-    {
-        $actions = array();
-
-        //Generate actions for this event name
-        foreach ($this->actionGenerators as $generator) {
-            $generatedActions = $generator->handle($eventName, $event);
-
-            if (null != $generatedActions) {
-                $actions = array_merge($actions, $generatedActions);
-            }
-        }
-
-        //For each generated action, start execution
-        foreach ($actions as $action) {
-            $this->execute($action);
-        }
-
-        return $actions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function linkEvent($event, array $actionDefinitionNames)
-    {
-        $this->eventMap[$event] = $actionDefinitionNames;
     }
 
     /**

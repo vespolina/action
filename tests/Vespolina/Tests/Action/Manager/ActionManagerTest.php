@@ -10,21 +10,25 @@
 namespace Vespolina\Tests\Action\Manager;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Vespolina\Action\Execution\ExecutionInterface;
+use Vespolina\Action\Event\ActionEvent;
 use Vespolina\Action\Manager\ActionManager;
 use Vespolina\Action\Gateway\ActionMemoryGateway;
 use Vespolina\Entity\Action\Action;
 use Vespolina\Entity\Action\ActionDefinition;
-use Vespolina\Entity\Action\ActionInterface;
+
 
 
 /**
  */
 class ActionManagerTest extends \PHPUnit_Framework_TestCase
 {
+    protected $manager;
+    protected $dispatcher;
+
     protected function setUp()
     {
-        $this->manager = new ActionManager(new ActionMemoryGateway(), new EventDispatcher());
+        $this->dispatcher = new EventDispatcher();
+        $this->manager = new ActionManager(new ActionMemoryGateway(), $this->dispatcher);
     }
 
     public function testAddFindActionDefinition()
@@ -42,31 +46,31 @@ class ActionManagerTest extends \PHPUnit_Framework_TestCase
         $actionDefinition = new ActionDefinition('shake', 'Vespolina\Tests\Action\Manager\DanceExecutionClass');
         $this->manager->addActionDefinition($actionDefinition);
         $action = $this->manager->createAction('shake', 'dog007');
-
         $this->assertInstanceOf('Vespolina\Entity\Action\Action', $action);
     }
 
-    public function testCreateAndExecuteAction()
+    public function testLaunchAction()
     {
-        $actionDefinition = new ActionDefinition('shake',  'Vespolina\Tests\Action\Manager\DanceExecutionClass');
+        $actionDefinition = new ActionDefinition('shake');
         $this->manager->addActionDefinition($actionDefinition);
-        $action = $this->manager->createAndExecuteAction('shake', 'dog007');
 
+        //Register our action listener
+        $this->dispatcher->addListener('v.action.shake.execute', array(new DanceExecutionListener(), 'onExecute'));
+
+        $action = $this->manager->launchAction('shake', new DummySubject());
     }
-
 }
 
-class DanceExecutionClass implements  ExecutionInterface
+class DanceExecutionListener
 {
-    /**
-     * Execute an action
-     *
-     * @param ActionInterface $action
-     */
-    function execute(ActionInterface $action)
+    function onExecute(ActionEvent $event)
     {
         //Do something cool like dancing
-        $action->setState(Action::STATE_COMPLETED);
+        $event->getAction()->setState(Action::STATE_COMPLETED);
     }
+}
+
+class DummySubject
+{
 
 }

@@ -11,16 +11,15 @@ namespace Vespolina\Entity\Action;
 
 class ActionDefinition implements ActionDefinitionInterface
 {
-    protected $executionClass;
+    protected $eventName;
     protected $handlerClass;
     protected $name;
     protected $parameters;
     protected $schedulingType;
     protected $topic;
     
-    public function __construct($name, $executionClass, $topic = 'default')
+    public function __construct($name, $topic = 'default')
     {
-        $this->executionClass = $executionClass;
         $this->handlerClass = 'Vespolina\Action\Handler\DefaultActionHandler';
         $this->name = $name;
         $this->topic = $topic;
@@ -29,9 +28,17 @@ class ActionDefinition implements ActionDefinitionInterface
     /**
      * {@inheritDoc}
      */
-    public function getExecutionClass()
+    public function getEventName()
     {
-        return $this->executionClass;
+        return $this->eventName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setEventName($eventName)
+    {
+        $this->eventName = $eventName;
     }
 
     /**
