@@ -50,20 +50,6 @@ interface ActionManagerInterface
     function addActionDefinition(ActionDefinitionInterface $actionDefinition);
 
     /**
-     * Register an action execution class
-     *
-     * @param ExecutionInterface $actionExecution
-     * @return mixed
-     */
-    function addActionExecution(ExecutionInterface $actionExecution);
-    /**
-     * Add an action generator
-     *
-     * @param ActionGeneratorInterface $generator
-     */
-    function addActionGenerator(ActionGeneratorInterface $generator);
-
-    /**
      * Retrieve an action definition by it's name
      * @param $name
      * @return Vespolina\Entity\Action\ActionDefinitionInterface
@@ -76,24 +62,6 @@ interface ActionManagerInterface
      * @return array
      */
     function findActionDefinitionsForEvent($eventName);
-
-    /**
-     * Handle an inbound event, generate the relevant actions and execute them
-     *
-     * @param $eventName
-     * @param $event
-     * @return mixed
-     */
-    function handleEvent($eventName, $event);
-
-    /**
-     * Link an event name to one or multiple action definition names
-     *
-     * @param $event
-     * @param array $actionDefinitions
-     * @return mixed
-     */
-    function linkEvent($event, array $actionDefinitionNames);
 
     /**
      * Execute the given action

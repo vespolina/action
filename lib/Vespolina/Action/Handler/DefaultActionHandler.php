@@ -59,8 +59,13 @@ class DefaultActionHandler implements ActionHandlerInterface
        $eventName = $definition->getEventName();
 
        if (null == $eventName) {
-           $eventName = 'v.action.' . $action->getName() . 'execute';
+           $eventName = 'v.action.' . $action->getName() . '.execute';
        }
-       $this->eventDispatcher->dispatch($eventName, $event);
+        //var_dump($this->eventDispatcher);die($eventName);
+
+        if (!$this->eventDispatcher->hasListeners($eventName)) {
+            throw new \RuntimeException('No listener configured for action execution ' . $eventName);
+        }
+        $this->eventDispatcher->dispatch($eventName, $event);
     }
 }

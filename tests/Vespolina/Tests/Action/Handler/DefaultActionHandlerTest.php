@@ -19,7 +19,6 @@ use Vespolina\Entity\Action\Action;
  */
 class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $dispatcher;
     protected $handler;
 
@@ -60,7 +59,7 @@ class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->handler->process($action, $actionDefinition);
 
         //Event dispatcher should have called the event listener, so let's have a look at the outcome
-        $this->assertTrue($action->isCompleted($action));
+        $this->assertTrue($action->isCompleted());
     }
 
     public function testExecutionActionWithFailure()
@@ -69,28 +68,29 @@ class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
         $action = $this->handler->createAction($actionDefinition);
 
         //Register our action listener
-        $this->dispatcher->addListener('v.action.execute.action2', array(new MyBadActionEventListener(), 'onExecute'));
+        $this->dispatcher->addListener('v.action.action2.execute', array(new MyBadActionEventListener(), 'onExecute'));
+
         $this->handler->process($action, $actionDefinition);
 
         //Event dispatcher should have called the event listener, so let's have a look at the outcome
-        $this->assertFalse($action->isCompleted($action));
+        $this->assertEquals(Action::STATE_FAILURE, $action->getState());
     }
 
     public function testExecutionActionRestart()
     {
-        $actionDefinition = new ActionDefinition('action3', 'v.action.execute.action3');
+        $actionDefinition = new ActionDefinition('action3');
         $action = $this->handler->createAction($actionDefinition);
 
         //Register our action listener
-        $this->dispatcher->addListener('v.action.execute.action3', array(new MyBadAndGoodActionEventListener(), 'onExecute'));
+        $this->dispatcher->addListener('v.action.action3.execute', array(new MyBadAndGoodActionEventListener(), 'onExecute'));
 
         //First time the processing would fail
         $this->handler->process($action, $actionDefinition);
-        $this->assertFalse($action->isCompleted($action));
+        $this->assertEquals(Action::STATE_FAILURE, $action->getState(), 'First time the action should fail');
 
         //Second time the execution should succeed
         $this->handler->process($action, $actionDefinition);
-        $this->assertTrue($action->isCompleted($action));
+        $this->assertTrue($action->isCompleted(), 'Second time the action should succeed');
 
     }
 }
