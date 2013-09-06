@@ -115,6 +115,22 @@ class ActionManager implements ActionManagerInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function updateAction(ActionInterface $action)
+    {
+        $this->actionGateway->updateAction($action);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateActionDefinition(ActionDefinitionInterface $actionDefinition)
+    {
+        $this->actionGateway->updateActionDefinition($actionDefinition);
+    }
+
+    /**
      * Start the execution of an action or schedule the action for processing later on
      *
      * @param ActionInterface $action
