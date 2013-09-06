@@ -39,46 +39,73 @@ class Action implements ActionInterface
         $this->state = self::STATE_INITIAL;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getDefinition()
     {
         return $this->definition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getContext()
     {
         return $this->context;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getSubject()
     {
         return $this->subject;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getState()
     {
         return $this->state;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function isCompleted()
     {
         return $this->state == Action::STATE_COMPLETED;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setState($state)
     {
         $this->state = $state;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setExecutedAt($executedAt)
     {
         $this->executedAt = $executedAt;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function setScheduledAt($scheduledAt)
     {
         $this->scheduledAt = $scheduledAt;

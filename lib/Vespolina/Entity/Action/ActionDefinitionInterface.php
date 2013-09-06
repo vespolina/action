@@ -23,13 +23,6 @@ interface ActionDefinitionInterface
     function getName();
 
     /**
-     * Retrieve parameters which are injected into the action
-     *
-     * @return string
-     */
-    function getParameters();
-
-    /**
      * Return the event name used when the action is processed
      *
      * @return string
@@ -59,6 +52,13 @@ interface ActionDefinitionInterface
     function setHandlerClass($handlerClass);
 
     /**
+     * Retrieve parameters which are injected into the action
+     *
+     * @return string
+     */
+    function getParameters();
+
+    /**
      * Set parameters of this action definition
      * When an action is created the parameters are copied into the context
      *
@@ -72,6 +72,20 @@ interface ActionDefinitionInterface
      * @return string
      */
     function getSchedulingType();
+
+    /**
+     * Return the version of the action definition
+     *
+     * @return integer
+     */
+    function getVersion();
+
+    /**
+     * Set the version of this action definition
+     *
+     * @param $version
+     */
+    function setVersion($version);
     
     /**
      * Get the topic of the action definition (eg. order, cart)

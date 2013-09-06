@@ -119,7 +119,6 @@ class ActionManager implements ActionManagerInterface
      *
      * @param ActionInterface $action
      * @param bool $reprocess
-     * @return mixed
      */
     protected function doExecute(ActionInterface $action, $reprocess = false)
     {
@@ -127,7 +126,7 @@ class ActionManager implements ActionManagerInterface
         $definition = $this->findActionDefinitionByName($action->getName());
         
         if (null == $definition) {
-            //TODO: Throw an error
+            throw new \RuntimeException(sprintf('Could not load action definition for action %a', $action->getName()));
         }
 
         $handler = $this->handlers[$definition->getHandlerClass()];
@@ -137,12 +136,12 @@ class ActionManager implements ActionManagerInterface
             $isReprocessable = $handler->isReprocessable($action, $definition);
 
             if (false == $isReprocessable) {
-                //TODO: Throw an error
+                throw new \RuntimeException(sprintf('Reprocessing is not allowed for action %a', $action->getName()));
             }
         }
 
         //Cool, we can process the action!
-        $outcome = $handler->process($action, $definition);
+        $handler->process($action, $definition);
         
         //Save the state of the action
         $this->actionGateway->updateAction($action);

@@ -25,6 +25,7 @@ class ActionTest extends \PHPUnit_Framework_TestCase
         $action->setState(Action::STATE_COMPLETED);
         $action->setExecutedAt(new \DateTime("now"));
 
+
         $this->assertEquals($action->getDefinition()->getName(), 'orderPaintForCar');
         $this->assertEquals($action->getName(), 'orderPaintForCar');
         $this->assertEquals($action->getContext(), $context);
