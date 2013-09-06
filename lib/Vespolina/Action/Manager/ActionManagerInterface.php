@@ -70,5 +70,19 @@ interface ActionManagerInterface
      * @return mixed
      */
     function execute(ActionInterface $action);
+
+    /**
+     * Persist the action definition
+     *
+     * @param ActionDefinitionInterface $actionDefinition
+     */
+    function updateActionDefinition(ActionDefinitionInterface $actionDefinition);
+
+    /**
+     * Persist the action
+     *
+     * @param ActionInterface $action
+     */
+    function updateAction(ActionInterface $action);
 }
 
