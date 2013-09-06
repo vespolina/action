@@ -11,5 +11,6 @@
         <field name="topic" fieldName="topic" type="string" />
         <field name="parameters" fieldName="parameters" type="hash" />
         <field name="schedulingType" fieldName="schedulingType" type="string" />
+        <field name="version" fieldName="version" type="int"/>
     </document>
 </doctrine-mongo-mapping>

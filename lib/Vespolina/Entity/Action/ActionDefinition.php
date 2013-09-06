@@ -17,12 +17,14 @@ class ActionDefinition implements ActionDefinitionInterface
     protected $parameters;
     protected $schedulingType;
     protected $topic;
+    protected $version;
     
     public function __construct($name, $topic = 'default')
     {
         $this->handlerClass = 'Vespolina\Action\Handler\DefaultActionHandler';
         $this->name = $name;
         $this->topic = $topic;
+        $this->version = 1;
     }
 
     /**
@@ -104,4 +106,22 @@ class ActionDefinition implements ActionDefinitionInterface
     {
         return true;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+
 }
