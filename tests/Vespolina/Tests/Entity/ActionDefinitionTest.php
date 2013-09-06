@@ -23,7 +23,14 @@ class ActionDefinitionTest extends \PHPUnit_Framework_TestCase
        
         $this->assertEquals($actionDefinition->getName(), 'orderPaintForCar');
         $this->assertEquals($actionDefinition->getTopic(), 'car');
-        
+        $this->assertEquals($actionDefinition->getVersion(), 1);
     }
 
+    public function testVersions()
+    {
+        $actionDefinition = new ActionDefinition('orderPaintForCarNewerVersion', 'car');
+        $actionDefinition->setVersion(2);
+
+        $this->assertEquals($actionDefinition->getVersion(), 2);
+    }
 }

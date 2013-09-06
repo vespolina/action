@@ -11,7 +11,6 @@
         <field name="state" fieldName="state" type="string" />
         <field name="context" fieldName="context" type="hash" />
         <field name="scheduledAt" fieldName="schedulingType" type="string" />
-
         <reference-one field="definition"
                        fieldName="definition"
                        target-document="Vespolina\Entity\Action\ActionDefinition"/>
