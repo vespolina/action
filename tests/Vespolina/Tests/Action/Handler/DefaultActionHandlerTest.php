@@ -15,8 +15,6 @@ use Vespolina\Action\Handler\DefaultActionHandler;
 use Vespolina\Entity\Action\ActionDefinition;
 use Vespolina\Entity\Action\Action;
 
-/**
- */
 class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
 {
     protected $dispatcher;
@@ -27,7 +25,6 @@ class DefaultActionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->dispatcher = new EventDispatcher();
         $this->handler = new DefaultActionHandler('Vespolina\Entity\Action\Action', $this->dispatcher);
     }
-
 
     public function testCreateAction()
     {

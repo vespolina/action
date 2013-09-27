@@ -1,6 +1,10 @@
 action
 ======
 
+[![Build Status](https://secure.travis-ci.org/vespolina/action.png?branch=master)](http://travis-ci.org/vespolina/action)
+[![Total Downloads](https://poser.pugx.org/vespolina/action/downloads.png)](https://packagist.org/packages/vespolina/action)
+[![Latest Stable Version](https://poser.pugx.org/vespolina/action/v/stable.png)](https://packagist.org/packages/vespolina/action)
+
 ## Introduction
 
 This library manages the lifecycle of actions.  An action is something to be executed at a given time.  This might be direct or scheduled to be executed in the future.
