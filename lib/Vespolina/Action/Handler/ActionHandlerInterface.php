@@ -23,6 +23,8 @@ interface ActionHandlerInterface
      * Create a new action out of an action definition
      *
      * @param ActionDefinitionInterface $definition
+     * @param mixed|null $subject
+     * @return mixed
      */
     function createAction(ActionDefinitionInterface $definition, $subject = null);
 
