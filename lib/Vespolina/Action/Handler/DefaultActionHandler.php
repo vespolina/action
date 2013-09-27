@@ -30,7 +30,7 @@ class DefaultActionHandler implements ActionHandlerInterface
      */
     public function createAction(ActionDefinitionInterface $definition, $subject = null)
     {
-        //Initialize the context with the parameters from the action definition
+        // Initialize the context with the parameters from the action definition
         $context = array();
         $parameters = $definition->getParameters();
         if (null != $parameters) {
@@ -45,8 +45,8 @@ class DefaultActionHandler implements ActionHandlerInterface
      */
     public function isReprocessable(ActionInterface $action, ActionDefinitionInterface $definition)
     {
-        //Here you could add additional logic based on the action definition and the current context of the action
-        //But we only check the action definition here if it is ever allowed.
+        // Here you could add additional logic based on the action definition and the current context of the action
+        // But we only check the action definition here if it is ever allowed.
         return $definition->isReprocessable();
     }
 
@@ -55,13 +55,12 @@ class DefaultActionHandler implements ActionHandlerInterface
      */
     public function process(ActionInterface $action, ActionDefinitionInterface $definition)
     {
-       $event = new ActionEvent($action);
-       $eventName = $definition->getEventName();
+        $event = new ActionEvent($action);
+        $eventName = $definition->getEventName();
 
-       if (null == $eventName) {
+        if (null == $eventName) {
            $eventName = 'v.action.' . $action->getName() . '.execute';
-       }
-        //var_dump($this->eventDispatcher);die($eventName);
+        }
 
         if (!$this->eventDispatcher->hasListeners($eventName)) {
             throw new \RuntimeException('No listener configured for action execution ' . $eventName);

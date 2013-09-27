@@ -27,7 +27,7 @@ class ActionMemoryGateway implements ActionGatewayInterface
     {
         $actions = array();
         
-        //If we have the subject, it is pretty easy to retrieve actions in a given state
+        // If we have the subject, it is pretty easy to retrieve actions in a given state
         if (null != $subject) {
             if (array_key_exists($subject, $this->actions)) {
                 foreach ($this->actions[$subject] as $action) {
@@ -40,7 +40,7 @@ class ActionMemoryGateway implements ActionGatewayInterface
             return $actions;
         }
 
-        //If we have no subject, we need to iterate over all subjects *sigh*
+        // If we have no subject, we need to iterate over all subjects *sigh*
         foreach ($this->actions as $subject => $subjectActions) {
             foreach ($subjectActions as $action) {
                 if ($state == $action->getState()) {
@@ -98,4 +98,3 @@ class ActionMemoryGateway implements ActionGatewayInterface
     {
         $this->definitions[$actionDefinition->getName()] = $actionDefinition;
     }
-}

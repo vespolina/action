@@ -38,7 +38,7 @@ class ActionManager implements ActionManagerInterface
         $this->actionGateway = $actionGateway;
         $this->handlers = array();
         
-        //Register a default handler
+        // Register a default handler
         $this->handlers['Vespolina\Action\Handler\DefaultActionHandler'] = new DefaultActionHandler($this->actionClass, $this->eventDispatcher);
     }
 
@@ -51,7 +51,7 @@ class ActionManager implements ActionManagerInterface
         $action = null;
 
         if (null == $actionDefinition) {
-            //Todo throw error
+            // Todo throw error
         }
         
         return $this->handlers[$actionDefinition->getHandlerClass()]->createAction($actionDefinition, $subject);
@@ -93,7 +93,6 @@ class ActionManager implements ActionManagerInterface
     public function findActionDefinitionsForEvent($eventName)
     {
         if (array_key_exists($eventName, $this->eventMap)) {
-
             return $this->eventMap[$eventName];
         }
     }
@@ -138,7 +137,7 @@ class ActionManager implements ActionManagerInterface
      */
     protected function doExecute(ActionInterface $action, $reprocess = false)
     {
-        //The first question is, are we even allowed to reprocess this action?
+        // The first question is, are we even allowed to reprocess this action?
         $definition = $this->findActionDefinitionByName($action->getName());
         
         if (null == $definition) {
@@ -148,7 +147,7 @@ class ActionManager implements ActionManagerInterface
         $handler = $this->handlers[$definition->getHandlerClass()];
 
         if ($reprocess) {
-            //Delegate to the action handler to see if the action is reprocessable
+            // Delegate to the action handler to see if the action is reprocessable
             $isReprocessable = $handler->isReprocessable($action, $definition);
 
             if (false == $isReprocessable) {
@@ -156,10 +155,10 @@ class ActionManager implements ActionManagerInterface
             }
         }
 
-        //Cool, we can process the action!
+        // Cool, we can process the action!
         $handler->process($action, $definition);
         
-        //Save the state of the action
+        // Save the state of the action
         $this->actionGateway->updateAction($action);
     }
 }
