@@ -26,6 +26,7 @@ class Action implements ActionInterface
     protected $state;
 
     /**
+     * @param ActionDefinitionInterface $definition
      * @param $name Action name
      * @param string $subject subject (eg. order)
      * @param array $context

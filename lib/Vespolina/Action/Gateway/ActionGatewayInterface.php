@@ -19,7 +19,6 @@ use Vespolina\Entity\Action\ActionInterface;
  */
 interface ActionGatewayInterface
 {
-
     /**
      * Find actions by state and optional the subject
      * @param $state

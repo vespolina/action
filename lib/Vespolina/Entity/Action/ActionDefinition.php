@@ -122,6 +122,4 @@ class ActionDefinition implements ActionDefinitionInterface
     {
         return $this->version;
     }
-
-
 }

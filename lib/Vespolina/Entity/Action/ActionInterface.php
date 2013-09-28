@@ -22,7 +22,7 @@ interface ActionInterface
 {
     /**
      * Get the action definition for this action
-     * @return Vespolina\Entity\Action\ActionDefinitionInterface
+     * @return \Vespolina\Entity\Action\ActionDefinitionInterface
      */
     function getDefinition();
 
@@ -46,12 +46,13 @@ interface ActionInterface
 
     /**
      * Get the state of this action
+     * @param $state
      * @return string
      */
     function setState($state);
 
     /**
-     * Has the action ran before and was it succesfull?
+     * Has the action ran before and was it successful?
      * @return boolean
      */
     function isCompleted();
